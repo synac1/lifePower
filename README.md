@@ -1,11 +1,6 @@
 # lifePower
 Life Power is your Battery Delivery Company software
 
-# Cowboy Runner
-
-### Description
-To be added
-
 ------------
 
 ### Features

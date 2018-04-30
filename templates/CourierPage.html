@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport"  content="width=1280">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.3/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/datatables.min.css" />
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jqc-1.12.3/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/datatables.min.js"></script>
+
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <!-- stylesheets -->
+
+  <style media="screen">
+  .mainTable{
+    table-layout: fixed;
+  }
+  .mainTable td{
+    text-overflow: ellipsis;
+  }
+
+  #map {
+    height: 400px;
+    width: 100%;
+  }
+
+
+  .dark-primary-color    { background: #303F9F !important;  }
+  .default-primary-color { background: #3F51B5 !important; }
+  .light-primary-color   { background: #C5CAE9 !important; }
+  .text-primary-color    { color: #FFFFFF !important; }
+  .accent-color          { background: #7C4DFF !important; }
+  .primary-text-color    { color: #212121 !important; }
+  .secondary-text-color  { color: #757575 !important; }
+  .divider-color         { border-color: #BDBDBD !important; }
+
+
+
+  /*
+   * Base structure
+   */
+
+  /* Move down content because we have a fixed navbar that is 50px tall */
+  body {
+    padding-top: 50px;
+  }
+
+  /*
+   * Typography
+   */
+
+  h1 {
+    margin-bottom: 20px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #eee;
+  }
+
+  /*
+   * Sidebar
+   */
+
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    border-right: 1px solid #eee;
+    background: #2a2a2a;
+  }
+
+  /* Sidebar navigation */
+  .sidebar {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar .nav {
+    margin-bottom: 20px;
+  }
+
+  .sidebar .nav-item {
+    width: 100%;
+
+  }
+
+
+  .sidebar .nav-item + .nav-item {
+    margin-left: 0;
+  }
+
+  .sidebar .nav-link {
+    border-radius: 0;
+    display: block;
+    text-decoration: none;
+    color: #999999;
+  }
+
+  .sidebar .nav-link:hover{
+    text-decoration: none;
+    color: #fff !important;
+    background: rgba(134, 90, 175, 0.5) !important;
+  }
+
+  /*
+   * Dashboard
+   */
+
+
+  .modal-content{
+    border-radius: 0px !important;
+    border: 0px !important;
+  }
+
+  .modal-body{
+    padding: 10px !important;
+  }
+
+  .modal-lg {
+    max-width: 80% !important;
+    padding-top: 10px !important;
+    margin-top: 0px !important;
+  }
+
+  .modal-header {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 0px !important;
+    border-bottom: 0px !important;
+  }
+
+  </style>
+</head>
+
+<div class="printable"></div>
+
+<body>
+
+  <div class="screen">
+
+
+    <!-- Top Navegation bar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand" href="#"> <i class="fas fa-battery-full"></i> Life Power</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item active " href="#">Queue</a>
+              <a class="dropdown-item" href="#">List</a>
+              <a class="dropdown-item" href="#">Report</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Export</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Courier</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Dashboard</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Logoff</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="#" method="post">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+
+    <div class="container-fluid ">
+
+      <div class="row">
+
+        <!-- Side Navegation bar -->
+
+        <!--BODY -->
+        <main class="col">
+          <!-- <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2"> -->
+
+          <div class="container-fluid">
+            <div class="row pt-3">
+              <div class="col p-0">
+                <div class="card">
+                  <div class="card-header text-white bg-secondary">
+                    <h3>Stats</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="card-deck">
+
+                      <!-- <div class="card text-white bg-secondary">
+                        <div class="card-header"> Deliveries within last 5 days</div>
+                        <div class="card-body">
+                          <h5 class="card-title"><i class="far fa-calendar-alt"></i> Daily Visits</h5>
+                          <div id="chart_div"></div>
+                        </div>
+                      </div> -->
+                      <div class="card text-white bg-secondary">
+                        <div class="card-header"><i class="fa fa-truck" aria-hidden="true"></i> Todays' Request</div> 
+                        <div class="card-body">
+                          <h5 class="card-title"><i class="fa fa-battery-full" aria-hidden="true"></i> Batteries Delivered</h5>
+                          <p style="font-size: 250%; font-weight: bold;">14</p>
+                          <h5 class="card-title"><i class="fa fa-battery-full" aria-hidden="true"></i> Batteries In Truck</h5>
+                          <p style="font-size: 250%; font-weight: bold;">3</p>
+                        </div>
+                      </div>
+                      <div class="card text-white bg-secondary">
+                        <div class="card-header">Courier Stock</div>
+                        <div class="card-body">
+
+
+                          <!-- <h6 class="card-title">Courier 1</h6>
+                          <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b></b></div>
+                            <div class="progress-bar bg-danger" role="progressbar"  style="width: 95%"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b>Coming Back Restock</b></div>
+                          </div> -->
+
+                          <h6 class="card-title"><i class="fa fa-user" aria-hidden="true"></i> Courier: Taina</h6>
+                          <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b>85% (3 left)</b></div>
+                            <div class="progress-bar bg-danger" role="progressbar"  style="width: 15%"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+
+                          <!-- <h6 class="card-title">Courier 3</h6>
+                          <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 87%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b>87% (273 left)</b></div>
+                            <div class="progress-bar bg-danger" role="progressbar"  style="width: 13%"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+
+                        </div> -->
+                      </div>
+
+
+                      <!-- <div class="card text-white bg-secondary">
+                        <div class="card-header"><i class="fas fa-newspaper"></i>&nbsp;New</div>
+                        <div class="card-body">
+                          <h5 class="card-title">New features</h5>
+                          <li>Ability to change some admin info</li>
+                          <li>Please change your password <a href="#" class="btn btn-light btn-sm">Here</a></li>
+                          <li>First iteration of reports <a href="#" class="btn btn-light btn-sm">Try</a></li>
+
+                        </div>
+                      </div> -->
+
+
+
+                    </div>
+                  </div>
+
+
+                  <div class="card-footer">
+                    <button class="btn btn-outline-primary" id="refresh">Refresh</button>
+                    <small class="text-muted" id="lastupdated">Last updated</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-block" style="margin-top:15px; padding:10px;">REPORT EMERGENCY ROUTE</button>
+
+
+          <div class="container-fluid">
+
+            <div class="row pt-3">
+              <div class="col p-0">
+                <div class="card">
+                  <div class="card-header text-white bg-secondary">
+                    <h3>Queue</h3>
+                  </div>
+                  <div class="card-body">
+
+                    <div>
+
+
+                      <table class="table table-hover mainTable" frame="box" cellspacing="0" width="98%">
+                        <thead>
+                          <tr>
+
+                            <th>First</th>
+                            <th>Last</th>
+                            <th>E-mail</th>
+                            <th>Request</th>
+                            <th>Wait time</th>
+                            <th>Status</th>
+                            <th>Handle Order</th>
+                            <th>Contact</th>
+                            <th>Tool</th>
+
+
+
+
+
+                          </tr>
+                        </thead>
+
+
+
+                        <tbody>
+                          <tr>
+                            <td>Francis</td>
+                            <td>Cornacchiulo</td>
+                            <td>FrancisCornacchiulo@gmail.com</td>
+                            <td><span class="badge badge-primary" style="background-color:#2c3e50;">1</span> Battery Packs</td>
+                            <td>7 minutes 07 seconds</td>
+                            <td style="color:green;">
+                              <i class="far fa-clock"></i> Delivered
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="147" data-queue="waiting" data-batt_number="2" value="1413">Select/Cancel</button>
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="6358" data-queue="waiting" data-batt_number="1" value="2272">Contact</button>
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="5827" data-queue="waiting"  data-batt_number="1" value="2271">Open</button>
+                            </td>
+
+                          </tr>
+
+                          <tr>
+                            <td>Hector</td>
+                            <td>Dominguez</td>
+                            <td>hector_dominguez@outlook.com</td>
+                            <td><span class="badge badge-primary" style="background-color:#2c3e50;">2</span> Battery Packs</td>
+                            <td>7 minutes 07 seconds</td>
+                            <td>
+                              <i class="far fa-clock"></i> Waiting for Delivery
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="147" data-queue="waiting" data-batt_number="2" value="1413">Select/Cancel</button>
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="6358" data-queue="waiting" data-batt_number="1" value="2272">Contact</button>
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="147" data-queue="waiting" data-batt_number="2" value="1413">Open</button>
+                            </td>
+
+
+                          </tr>
+
+                          <tr>
+                            <td>Tatiana</td>
+                            <td>Rock</td>
+                            <td>TatianaRock@gmail.com</td>
+                            <td><span class="badge badge-primary" style="background-color:#2c3e50;">1</span> Battery Pack</td>
+                            <td>10 minutes 43 seconds</td>
+                            <td style="color:#e69900;">
+                              <i class="far fa-clock"></i> In Route
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="147" data-queue="waiting" data-batt_number="2" value="1413">Select/Cancel</button>
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="6358" data-queue="waiting" data-batt_number="1" value="2272">Contact</button>
+                            </td>
+                            <td>
+                              <button id="selectbutton" type="button" class="btn btn-primary" data-value="6358" data-queue="waiting" data-batt_number="1" value="2272">Open</button>
+                            </td>
+
+                          </tr>
+
+
+
+
+                        </tbody>
+                      </table>
+
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="container-fluid">
+
+            <div class="row pt-3">
+              <div class="col p-0">
+                <div class="card">
+                  <div class="card-header text-white bg-secondary">
+                    <h3>Customers</h3>
+                  </div>
+                  <div class="card-body">
+
+                    <div id="map"></div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+          <br>
+          <br>
+          <br>
+        </main>
+
+        <div class="modal openM" id="select_modal">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div id="selectperson">
+              <div class="modal-header default-primary-color">
+                <h5 class="modal-title text-primary-color ">Visit id 1413 | Hector Dominguez hector_dominguez@outlook.com</h5>
+                <button type="button" class="close text-primary-color " data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Request Status = waiting</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false"><span class="badge badge-primary"><b>1</b></span> History</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                  </li>
+
+                </ul>
+
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <p class="mt-2" style="font-size:150%;">
+                  <b>Request :</b> <span class="badge badge-primary" style="background-color:#2c3e50;">2 Battery Packs</span> <br>
+
+                  <b>Device :</b> <span class="badge badge-primary" style="background-color:#2c3e50;">Samsung Galaxy S8+</span> <br>
+
+
+                </p>
+
+                <form id="form_visit" action="#" method="post">
+                  <div class="form-group">
+                    <label for="office_notes">Notes</label>
+
+
+                    <div class="input-group">
+                      <textarea class="form-control" id="office_notes" name="office_notes" rows="5"></textarea>
+                      <div class="input-group-append dropleft">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Suggestion</button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item subjestion disabled" href="#">No enough data available</a>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                  <input type="hidden" name="a_id" value="6">
+                  <input type="hidden" name="id_visit" value="1413">
+                  <input type="hidden" name="queue_status" value="waiting">
+                  <div class="row">
+                    <div class="col-3">
+                    <button type="submit" class="btn btn-primary default-primary-color" id="visit_submit">Assist</button>
+                    </div>
+
+
+
+                </div></form>
+              </div>
+                  <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="nav-history-tab">
+                  <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Request</th>
+                    <th>Notes</th>
+                    <th>date</th>
+                    <th>Status</th>
+                    <th>Tool</th>
+                  </tr>
+                  </thead>
+
+                  <tfoot>
+                  <tr>
+                    <th>Name</th>
+                    <th>Request</th>
+                    <th>Notes</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Tool</th>
+                  </tr>
+                  </tfoot>
+
+                  <tbody>
+
+                    <tr style="background-color:#C5CAE9; color:#ffffff; ">
+                      <td>Hector Dominguez</td>
+                      <td><span class="badge badge-success">1 Battery</span>  </td>
+                      <td></td>
+                      <td>2018-03-12 14:06:38</td>
+                      <td>waiting</td>
+                      <td>
+                        <button id="selectbutton" type="button" class="btn btn-primary" data-value="147" data-queue="waiting" value="1413">Open</button>
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                  </table>
+                </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <br>
+                <div class="col">
+                  <form id="form_profile" action="#" method="post">
+
+                    <div class="row">
+                      <div class="col">
+                        <p> <b> Profile created:</b> 2018-02-02 01:02:12 <b> Last updated:</b> 2018-02-02 01:03:13 </p>
+                      </div>
+                    </div>
+                    <div class="form-row mb-1">
+                      <div class="col-1">
+                        <label for="fname"><b>Name</b></label>
+                      </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="First Name" id="fname" name="fname" value="Hector">
+                      </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Last Name" id="lname" name="lname" value="Dominguez">
+                      </div>
+                    </div>
+
+                    <div class="form-row mb-1">
+                    <div class="col-1">
+                      <label for="email"><b>E-mail</b></label>
+                    </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="hector_dominguez@outlook.com">
+                      </div>
+                    </div>
+
+                    <div class="form-row mb-1">
+                    <div class="col-1">
+                      <label for="dob"><b>DOB</b></label>
+                    </div>
+                      <div class="col">
+                        <input type="date" class="form-control" placeholder="DOB" id="dob" name="dob" value="1985-05-22">
+                      </div>
+
+                    </div>
+
+                    <div class="form-row mb-1">
+                    <div class="col-1">
+                      <label for="phone"><b>Phone</b></label>
+                    </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Phone" id="phone" name="phone" value="646-982-4264">
+                      </div>
+                    </div>
+
+                    <input type="hidden" name="stuID" value="147">
+
+                    <button type="submit" class="btn btn-primary default-primary-color" id="save_profile">Save changes</button>
+                  </form>
+                </div>
+                <br>
+
+
+              </div>
+                  <div class="tab-pane fade" id="referal" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <p class="mt-2" style="font-size:150%;">
+                  <b>Referal:</b>
+                </p>
+
+                <div class="input-group ">
+                  <div class="input-group-prepend col-1 p-0">
+                    <label class="input-group-text w-100" for="refered_from"><b>From</b></label>
+                  </div>
+
+                  <input type="text" disabled="" class="form-control" placeholder="Office" id="refered_from" name="refered_from" value="Bursar">
+
+                </div>
+                <div class="input-group ">
+                  <div class="input-group-prepend col-1 p-0">
+                    <label class="input-group-text w-100" id="refered_to_text" for="refered_to"><b>To</b></label>
+                  </div>
+                  <select class="custom-select" id="refered_to">
+                    <option disabled="" selected="">Choose...</option>
+                    <option value="Admissions">Admissions</option><option value="Testing">Testing</option><option value="Financial Aid">Financial Aid</option><option value="SEEK">SEEK</option><option value="Financial Aid Lab">Financial Aid Lab</option><option value="ASAP">ASAP</option><option value="SEEK_Lab">SEEK_Lab</option><option disabled="" value="Bursar">Bursar</option>
+
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="referal_notes" id="referal_notes_text"><b>Referal Notes</b></label>
+                  <textarea class="form-control" id="referal_notes" name="referal_notes" rows="3"></textarea>
+                </div>
+                <input type="hidden" name="id_visit" value="1413">
+                <input type="hidden" name="id_student" id="id_student" value="147">
+
+                <button type="button" class="btn btn-primary default-primary-color" id="referal_submit">Submit &amp; End Visit</button>
+
+                <div id="display_referal"></div>
+
+              </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button id="btnPrint" type="button" class="btn btn-default">Print</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+        <div class="modal openM" id="select_modal">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div id=selectperson>
+                <br><h1><i class="fas fa-spinner fa-pulse"></i> LOADING...</h1><br>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <script>
+
+  var start = new Date();
+
+  $(window).load(function() {
+    $('#lastupdated').html("<b>Updated:</b> "+new Date());
+  });
+
+
+  var notification_array_old = ['0'];
+  notification_array_lenght_old = 0;
+
+  $(document).on("click", "#refresh", function(e) {
+    location.reload();
+  });
+
+  $(document).on("click", "#edit_toggle", function(e) {
+    $(".edits").toggle();
+    $(".info_show").toggle();
+  });
+
+
+
+  $(document).on("click", "#selectbutton", function(e) {
+    $('#select_modal').modal('show');
+  });
+
+
+
+  google.charts.load('current', {packages: ['corechart', 'bar']});
+  google.charts.setOnLoadCallback(drawBasic);
+
+  function drawBasic() {
+    var data = google.visualization.arrayToDataTable([
+      ['Date', 'Visits',{role: 'tooltip'},{ role: 'annotation' }],
+      ['Wednesday',87, '2018-03-14 Wednesday', '87'],
+      ['Thursday',114, '2018-03-15 Thursday', '114'],
+      ['Friday',52, '2018-03-16 Friday', '52'],
+      ['Monday',123, '2018-03-19 Monday', '123'],
+      ['Tuesday',254, '2018-03-20 Tuesday', '254'],
+    ]);
+
+
+    var options = {
+      'height':100,
+      // 'width':100,
+
+      chartArea: {
+        // leave room for y-axis labels
+        width: '100%'
+      },
+      legend: {position: 'none'},
+      // title: '7 Day visits',
+      titleTextStyle:{color: '#FFF'},
+      series: { 0: {color: 'lightgray'} },
+      hAxis: {
+        textStyle:{color: '#FFF'},
+        // textPosition: 'none' ,
+        gridlines: {
+          color: 'transparent'
+        }
+      },
+      vAxis: {
+        baselineColor: 'transparent',
+        textStyle:{color: '#FFF'},
+        textPosition: 'none',
+        gridlines: {
+          color: 'transparent'
+        }
+
+      },
+      textStyle:{color: '#FFF'},
+      backgroundColor: 'none',
+      tooltip: { textStyle: { fontName: 'verdana', fontSize: 16 } },
+      annotations: {
+        alwaysOutside: true,
+        textStyle: {
+          fontSize: 14,
+          bold: true,
+          color: '#ffffff',
+          auraColor: 'none'
+        },
+        stem:{
+          color: 'transparent',
+        }
+      },
+    };
+
+    var chart = new google.visualization.LineChart(  document.getElementById('chart_div'));
+
+
+    chart.draw(data, options);
+  }
+
+
+</script>
+
+<script>
+function initMap() {
+
+  var broadway = {
+    info: '<strong>Courier 1</strong><br>\
+    Status: Coming back to restock<br>',
+    lat: 40.703082,
+    long: -73.986078
+
+  };
+
+  var belmont = {
+    info: '<strong>Courier 2</strong><br>\
+    Status: On route to delivery<br>',
+    lat: 40.713681,
+    long: -73.961841
+  };
+
+  var sheridan = {
+    info: '<strong>Courier 3</strong><br>\
+    Status: On route to delivery<br>',
+    lat: 40.677610,
+    long: -74.005633
+  };
+
+  var costumer1 = {
+    info: '<strong>Hector R Dominguez</strong><br>\
+    Status: Request<br> Request: 2 Battery packs',
+    lat: 40.679496,
+    long: -74.009505
+  };
+
+  var costumer2 = {
+    info: '<strong>Paula Dorismond</strong><br>\
+    Status: Request<br> Request: 1 Battery pack',
+    lat: 40.694731,
+    long: -73.985136
+  };
+
+  var costumer3 = {
+    info: '<strong>Shereen Munroe</strong><br>\
+    Status: Request<br> Request: 1 Battery pack',
+    lat: 40.715943,
+    long: -73.960732
+  };
+
+
+  var image_truck = new google.maps.MarkerImage("https://wfoundry.com/art/delivery-truck.svg", null, null, null, new google.maps.Size(50,50));
+  var myIcon_user = new google.maps.MarkerImage("https://wfoundry.com/art/user-and-clock.svg", null, null, null, new google.maps.Size(50,50));
+
+
+
+
+  var locations = [
+    [broadway.info, broadway.lat, broadway.long, 0,"Courier: Taina",   image_truck ],
+    // [belmont.info, belmont.lat, belmont.long, 1,"Customer 2", image_truck ],
+    // [sheridan.info, sheridan.lat, sheridan.long, 2,"C 3", image_truck  ],
+
+    [costumer1.info, costumer1.lat, costumer1.long, 4,"Costumer: Hector", myIcon_user],
+    [costumer2.info, costumer2.lat, costumer2.long, 5,"Costumer: Judy", myIcon_user],
+    [costumer3.info, costumer3.lat, costumer3.long, 6,"Costumer: Levar", myIcon_user],
+  ];
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: new google.maps.LatLng(40.694989, -73.991942),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  var infowindow = new google.maps.InfoWindow({});
+
+  var marker, i;
+
+  var image_truck_user = 'https://wfoundry.com/art/user-and-clock.png';
+
+
+
+  for (i = 0; i < locations.length; i++) {
+    marker = new google.maps.Marker({
+      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+      map: map,
+      title: locations[i][4],
+      icon: locations[i][5],
+
+
+    });
+
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+      return function () {
+        infowindow.setContent(locations[i][0]);
+        infowindow.open(map, marker);
+      }
+    })(marker, i));
+  }
+}
+
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8flsb9uSViWUdueBHn5hfRvmNNAzEBpI&callback=initMap">
+</script>
+
+
+<script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

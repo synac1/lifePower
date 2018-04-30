@@ -11,25 +11,25 @@
 <body>
 
 <p>
+    NOTE:
+    Form submittion should insert the following in to the database:<br>
 
-    Form submittion should create should insert the following in to the database:
-
-    SCENARIO: Costummer select two batteries to be delivered.
-    1- on the database request table add a row
-    2- get id of the request that was inserted
-    3- insert as many rows in to the request_items table as there were Items requested
-    e.g.: if 2 batteries requested then insert 2 row into request_item table.
+    SCENARIO: Costummer select two batteries to be delivered. <br>
+    1- on the database request table add a row<br>
+    2- get id of the request that was inserted<br>
+    3- insert as many rows in to the request_items table as there were Items requested<br>
+    e.g.: if 2 batteries requested then insert 2 row into request_item table.<br><br>
 
     Note: Certain information will be empty until later such as id_user_courier,
     it will be filled out when the courier delivers the batteries.
-    For request_items rows, id_item will be empty until courier delivers the batteries.
+    For request_items rows, id_item will be empty until courier delivers the batteries.<br>
 
-    CODE EXAMPLE:
+    CODE EXAMPLE:<br><br>
 
-    INSERT INTO request (id_user, status, created) VALUES( "1" , "new_request" , NOW());
-    id_request = cursor.lastrowid;
-    INSERT INTO request_items (id_request) VALUES( "100" );
-    INSERT INTO request_items (id_request) VALUES( "100" );
+    INSERT INTO request (id_user, status, created) VALUES( "1" , "new_request" , NOW());<br>
+    id_request = cursor.lastrowid;<br>
+    INSERT INTO request_items (id_request) VALUES( "100" );<br>
+    INSERT INTO request_items (id_request) VALUES( "100" );<br>
 
 </p>
 

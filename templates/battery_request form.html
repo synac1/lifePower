@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Battery Request</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+<p>
+
+    Form submittion should create should insert the following in to the database:
+
+    SCENARIO: Costummer select two batteries to be delivered.
+    1- on the database request table add a row
+    2- get id of the request that was inserted
+    3- insert as many rows in to the request_items table as there were Items requested
+    e.g.: if 2 batteries requested then insert 2 row into request_item table.
+
+    Note: Certain information will be empty until later such as id_user_courier,
+    it will be filled out when the courier delivers the batteries.
+    For request_items rows, id_item will be empty until courier delivers the batteries.
+
+    CODE EXAMPLE:
+
+    INSERT INTO request (id_user, status, created) VALUES( "1" , "new_request" , NOW());
+    id_request = cursor.lastrowid;
+    INSERT INTO request_items (id_request) VALUES( "100" );
+    INSERT INTO request_items (id_request) VALUES( "100" );
+
+</p>
+
+
+    <form>
+        <!-- make sure that the session fills this input out with the user id -->
+        <input type="hidden" name="id_user" value="">
+
+        <div class="form-group row">
+            <label for="quatities" class="col-4 col-form-label">How many batteries?</label>
+            <div class="col-8">
+                <select id="quatities" name="quatities" class="custom-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

@@ -230,48 +230,28 @@
         <!--BODY -->
         <main class="col">
 
-          <form class="form-horizontal form" action='' method="POST">
-            <fieldset>
-              <div id="legend">
-                <legend class="">Battery Request Form</legend>
-              </div>
-              <br>
-              <div class="control-group">
-                <!-- Username -->
-                <label class="control-label" for="dt">Device Type</label>
-                <div class="controls">
-                  <input type="text" id="dt" name="dt" placeholder="" class="form-control mr-sm-2">
-                  <p class="help-block form-text text-muted">Enter the type of device you have</p>
-                </div>
-              </div>
+          <form>
+        <!-- make sure that the session fills this input out with the user id -->
+        <input type="hidden" name="id_user" value="">
 
-              <div class="control-group">
-                <!-- E-mail -->
-                <label class="control-label" for="email">Quantity</label>
-                <div class="controls">
-                  <input type="number" id="quantity" name="quantity" placeholder="1" class="form-control mr-sm-2">
-                  <p class="help-block form-text text-muted">Enter the number of batteries you need</p>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <!-- Password-->
-                <label class="control-label" for="password">Location</label>
-                <div class="controls">
-                  <input type="text" id="location" name="location" placeholder="" class="form-control mr-sm-2">
-                  <p class="help-block form-text text-muted">Enter the delivery location</p>
-                </div>
-              </div>
-
-              <br>
-              <div class="control-group">
-                <!-- Button -->
-                <div class="controls">
-                  <button class="btn btn-success">Submit Request</button>
-                </div>
-              </div>
-            </fieldset>
-          </form>
+        <div class="form-group row">
+            <label for="quatities" class="col-4 col-form-label">How many batteries?</label>
+            <div class="col-8">
+                <select id="quatities" name="quatities" class="custom-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+          
+          
         </main>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

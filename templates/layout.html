@@ -1,0 +1,77 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %} lang="en"{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{{title|default}}{% endblock title %}</title>
+
+    {%- block metas %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+  <!-- <meta name="viewport"  content="width=1280"> -->
+    {%- endblock metas %}
+
+    {%- block scripts %}
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"  async></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jqc-1.12.3/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/datatables.min.js"  async></script>
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"  async></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"  async></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" async></script>
+      <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}" defer></script>
+      <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}" defer></script>
+    {%- endblock scripts%}
+
+
+    {%- block styles %}
+    <!-- Bootstrap -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jqc-1.12.3/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/datatables.min.css" />
+
+    {%- endblock styles %}
+    {%- endblock head %}
+  </head>
+
+
+<!-- Body --> 
+    <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+
+    <div id="container">
+
+      <!-- Header --> 
+      <div class="header" id ="header">
+ 		{% include 'header.html' %}
+      </div>
+
+      <!--nav -->
+      <div id="navbar">
+      {% block navbar %}
+      {%- endblock navbar %}
+      </div>
+      <!-- Content --> 
+
+      <div id="content">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <!-- Footer --> 
+      <div class="footer" id="footer">
+      	{% include "footer.html" %}
+      </div>
+  
+
+    </div>
+    {%- endblock body %}
+ </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}

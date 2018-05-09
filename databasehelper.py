@@ -32,35 +32,105 @@ class Database:
         self.cur.close()
         self.con.close()
 
-    def execute_query(self, query, args=()):
+    def execute_query_all(self, query, args=()):
         self.cur.execute(query,args)
         rows =  self.cur.fetchall()
         self.con.commit()
         return rows
+    def execute_query_one(self, query, args=()):
+        self.cur.execute(query,args)
+        rows =  self.cur.fetchone()
+        self.con.commit()
+        return rows
+    
     def getAll(self, tableName):
         query = ('SELECT * FROM  %s'%(tableName))
-        rows = self.execute_query(query)
+        rows = self.execute_query_all(query)
         return rows
 
 class User:
     def __init__(self):
-        self.tableName=''
+        self.id=0
+        self.email=''
         self.fname=''
         self.lname=''
-        self.db= Database()
+        self.role=''
+        self.device=''
+        self.phone=''
+        self.lat=0.0
+        self.lng=0.0
+        self.roleId=0
+        
+class Users:
+    def __init__(self):
+        self.tableName='user'
+        self.db= Database('root','test1234','127.0.0.1',
+                '3308','mydb')
     def getAll(self):
         return self.db.getAll(self.tableName)
     
-    def isUser(self, id):
+    def isUser(self, login):
+        adminTable='admin'
+        query='select count(*) from '+adminTable+' where login = (%s)' 
+        count= self.db.execute_query_one(query, (login,))
+        if count[0] == 1 :
+            return True
+        else:
+            return False
+    def getAdminInfoValid(self, login, password):
+        adminTable='admin'
+        query='select id_user, id_role, id_admin from '+adminTable+' where login = (%s) and password = (%s)'
+        info= self.db.execute_query_one(query, (login,password,))
+        if info is not None :
+            return info
+        else:
+            return None
+    def _getRoleId(self, userId):
+        adminTable='admin'
+        query='select id_role from '+adminTable+' where id_user = (%s)'
+        info= self.db.execute_query_one(query, (userId,))
+        if info is not None :
+            return info
+        else:
+            return None
+    def getId(self,login,password):
+        info=getAdminInfoValid(self, login, password)
+        if info is not None:
+            return info[0]
+        else:
+            return None
+    def _getIdbyEmail(self, email):
         query=''
     def getOne(self, id):
-        query=''
+        query='select * from '+self.tableName+' where id_user=(%s) '
+        row= self.db.execute_query_one(query, (id,))
+        if row is not None:
+            user= User()
+            user.id=id
+            user.email=row[1]
+            user.fname=row[2]
+            user.lname=row[3]
+            user.device=row[4]
+            user.lat=row[5]
+            user.lng=row[6]
+            user.roleId=self._getRoleId(user.id)
+            user.role=self.getRole(user.roleId)
+            return user
+        else:
+            return None
 
-    def getRole(self, id):
-        query=''
+    def getRole(self, roleId):
+        query='select role  from role  where id_role = (%s) '
+        role= self.db.execute_query_one(query, (roleId,))
+        if role is not None:
+            return role[0]
+        else:
+            return None
 
     def addOne(self, user):
         query=''
+
+    
         
         
 
@@ -115,14 +185,10 @@ class BatteryRequest:
     
 
     
-    
 def testConnection():
-    db=Database('username','password','hostname',
-                'port','tablename')
-    rows = db.getAll('currilum')
-    if rows is not None:
-        for i in rows:
-            print(i)
+    user=Users()
+    #print(user.isUser("Manager3000"))
+    #print(user.getAdminInfoValid('Manager3000', 'test12345'))
 testConnection()
                 
     

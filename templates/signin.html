@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+{% block title %}LifePower{% endblock %}
+{% block content %}
+
+    <div class="container">
+      <div id="home">
+        <div class="landing-text">
+          <h1>LifePower</h1>
+          <h3>Batteries delivered to you</h3>
+          <a href="#login" class="btn btn-default btn-lg">Sign up</a>
+        </div>
+      </div>
+       <div class="padding">
+        <div class="row">
+          <div class="col-sm-6">
+          <img src="{{url_for('static', filename='img/battery.png')}}" style="width:50%;"/>
+          </div>
+          <div class="col-sm-6 text-center">
+          <h2>All About Us </h2>
+          <p class="lead">Here at LifePower, we want to provide you with the peace of mind of never having your battery die on you.
+            Whether it be for your car, your phone, your laptop, we provide you with the security of knowing you never have to go out of your way to recharge or replace </p>
+          </div>
+        </div>
+      </div>
+       <div class="services">
+          <h1>Get the batteries you want </h1>
+          <h3>Wherever you are</h3>
+        </div>
+        <div class="lead">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <h4> Tell Us</h4>
+                <p> When you subscribe, you simply tell us the devices you want taken care of by providing barcode,and never worry again </p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <img src="{{url_for('static', filename='img/truckicon.jpg')}}" class="img-responsive" style="width:60%; ">
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <h4>We Deliver </h4>
+                <p>Wherever you are located, we will come to you when your battery is running low or needs replacement. </p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <img src="{{url_for('static', filename='img/delivery2.png')}}" class="img-responsive" style="width:55%">
+              </div>
+            </div>
+          </div>
+        </div>
+<div class="bottomdiv">
+  <h2>Join Us</h2>
+        <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="panel panel-login">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-12">
+                  <a href="#" class="active" id="login-form-link">Login</a>
+                </div>
+              </div>
+              <hr>
+            </div>
+            <div class="panel-body" id="login">
+              <div class="row">
+                <div class="col-lg-12">
+                  <form id="login-form" action="/validateLogin" method="post" role="form" style="display: block;">
+                    <div class="form-group">
+                      <input type="text" name="inputUserName" id="inputUserName" tabindex="1" class="form-control" placeholder="Username"  required autofocus>
+                    </div>
+                    <div class="form-group">
+                      <input type="password" name="inputPassword" id="inputPassword" tabindex="2" class="form-control" placeholder="Password" required>
+                    </div>
+                    <div class="form-group text-center">
+                      <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                      <label for="remember"> Remember Me</label>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary btn-login" value="Log In" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="text-center">
+                            <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+{% endblock %}
+

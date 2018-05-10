@@ -2,11 +2,60 @@
 {% block title %}LifePower{% endblock %}
 {% block content %}
    <div class="container">
-            <div class="row" style="margin-top:232px;">
+            <div class="row">
                 <div class="col-md-12">
                     <h1 class="text-center" data-aos="fade-right" data-aos-duration="3000" ><strong>LifePower</strong></h1>
                     <h1><strong>Enterprise Dashboard</strong></h1>
                     <p class="lead text-center" data-aos="fade-left" data-aos-duration="3000" s><em></em> </p>
+                    <div class="text-center requestOrder" >
+					    <form class="requestForm" action="index.html" method="post">
+					      <h2>
+					        <caption>Request Order</caption>
+					      </h2>
+
+					      Battery Type: <input type="text" name="" placeholder="Enter Type"><p></p>
+
+					      Location: <input type="text" name="" placeholder="South America"><p></p>
+					      Delivery Date: <input type="date" name="" ><p></p>
+					      Quantity:
+					      <select class="" name="">
+					        <option value="">1</option>
+					        <option value="">2</option>
+					        <option value="">3</option>
+					        <option value="">4</option>
+					        <option value="">5</option>
+					        <option value="">6</option>
+					        <option value="">7</option>
+					        <option value="">8</option>
+					        <option value="">9</option>
+					        <option value="">10</option>
+					      </select>
+
+					      <button type="submit" name="button">Submit</button>
+					    </form>
+					  </div>
+
+					  <div class=" text-center tracking">
+					    <h2>Tracking</h2>
+					    <button type="button" name="button1">Track Order</button>
+					    <button type="button" name="button2">Track Delivery</button>
+
+					  </div>
+
+					  <div class="text-center manageOrder">
+					    <h2>Manage Orders</h2>
+					    <button type="button" name="button1">History</button>
+					    <button type="button" name="button2">Records</button>
+
+					  </div>
+
+					 
+					  <div class=" text-center contact">
+					    <h2>Contact Us</h2>
+					    Customer Support: 1-800-680-680 <br>
+					    Address: 250 Bedford Park Blvd W, Bronx, NY 10468
+
+					  </div>
                 </div>
 
                 

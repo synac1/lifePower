@@ -1,0 +1,524 @@
+{% extends "layout.html" %}
+{% block title %}LifePower{% endblock %}
+{% block content %}
+    <div class="container-fluid ">
+
+      <div class="row">
+
+        <!-- Side Navegation bar -->
+
+        <!--BODY -->
+        <main class="col">
+          <!-- <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2"> -->
+
+          <div class="container-fluid">
+            <div class="row pt-3">
+              <div class="col p-0">
+                <div class="card">
+                  <div class="card-header text-white bg-secondary">
+                    <h3>Daily stats</h3>
+                  </div>
+                                       <div class="card text-white bg-secondary">
+                        <div class="card-header">Courier Stock</div>
+                        <div class="card-body">
+                          <h6 class="card-title">Courier 1</h6>
+                          <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b></b></div>
+                            <div class="progress-bar bg-danger" role="progressbar"  style="width: 95%"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b>Coming Back Restock</b></div>
+                          </div>
+
+                          <h6 class="card-title">Courier 2</h6>
+                          <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 45%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b>45% (140 left)</b></div>
+                            <div class="progress-bar bg-danger" role="progressbar"  style="width: 55%"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+
+                          <h6 class="card-title">Courier 3</h6>
+                          <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 87%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><b>87% (273 left)</b></div>
+                            <div class="progress-bar bg-danger" role="progressbar"  style="width: 13%"aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                  <div class="card-footer">
+                    <button class="btn btn-outline-primary" id="refresh">Refresh</button>
+                    <small class="text-muted" id="lastupdated">Last updated</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        
+
+          <div class="container-fluid">
+
+            <div class="row pt-3">
+              <div class="col p-0">
+                <div class="card">
+                  <div class="card-header text-white bg-secondary">
+                    <h3>Couriers</h3>
+                  </div>
+                  <div class="card-body">
+
+                    <div id="map"></div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+          <br>
+          <br>
+          <br>
+        </main>
+
+        <div class="modal openM" id="select_modal">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div id="selectperson">
+              <div class="modal-header default-primary-color">
+                <h5 class="modal-title text-primary-color ">Visit id 1413 | Hector Dominguez hector_dominguez@outlook.com</h5>
+                <button type="button" class="close text-primary-color " data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Request Status = waiting</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false"><span class="badge badge-primary"><b>1</b></span> History</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                  </li>
+
+                </ul>
+
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <p class="mt-2" style="font-size:150%;">
+                  <b>Request :</b> <span class="badge badge-primary" style="background-color:#2c3e50;">2 Battery Packs</span> <br>
+
+                  <b>Device :</b> <span class="badge badge-primary" style="background-color:#2c3e50;">Samsung Galaxy S8+</span> <br>
+
+
+                </p>
+
+                <form id="form_visit" action="#" method="post">
+                  <div class="form-group">
+                    <label for="office_notes">Notes</label>
+
+
+                    <div class="input-group">
+                      <textarea class="form-control" id="office_notes" name="office_notes" rows="5"></textarea>
+                      <div class="input-group-append dropleft">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Suggestion</button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item subjestion disabled" href="#">No enough data available</a>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                  <input type="hidden" name="a_id" value="6">
+                  <input type="hidden" name="id_visit" value="1413">
+                  <input type="hidden" name="queue_status" value="waiting">
+                  <div class="row">
+                    <div class="col-3">
+                    <button type="submit" class="btn btn-primary default-primary-color" id="visit_submit">Assist</button>
+                    </div>
+
+
+
+                </div></form>
+              </div>
+                  <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="nav-history-tab">
+                  <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Request</th>
+                    <th>Notes</th>
+                    <th>date</th>
+                    <th>Status</th>
+                    <th>Tool</th>
+                  </tr>
+                  </thead>
+
+                  <tfoot>
+                  <tr>
+                    <th>Name</th>
+                    <th>Request</th>
+                    <th>Notes</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Tool</th>
+                  </tr>
+                  </tfoot>
+
+                  <tbody>
+
+                    <tr style="background-color:#C5CAE9; color:#ffffff; ">
+                      <td>Hector Dominguez</td>
+                      <td><span class="badge badge-success">1 Battery</span>  </td>
+                      <td></td>
+                      <td>2018-03-12 14:06:38</td>
+                      <td>waiting</td>
+                      <td>
+                        <button id="selectbutton" type="button" class="btn btn-primary" data-value="147" data-queue="waiting" value="1413">Open</button>
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                  </table>
+                </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <br>
+                <div class="col">
+                  <form id="form_profile" action="#" method="post">
+
+                    <div class="row">
+                      <div class="col">
+                        <p> <b> Profile created:</b> 2018-02-02 01:02:12 <b> Last updated:</b> 2018-02-02 01:03:13 </p>
+                      </div>
+                    </div>
+                    <div class="form-row mb-1">
+                      <div class="col-1">
+                        <label for="fname"><b>Name</b></label>
+                      </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="First Name" id="fname" name="fname" value="Hector">
+                      </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Last Name" id="lname" name="lname" value="Dominguez">
+                      </div>
+                    </div>
+
+                    <div class="form-row mb-1">
+                    <div class="col-1">
+                      <label for="email"><b>E-mail</b></label>
+                    </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Email" id="email" name="email" value="hector_dominguez@outlook.com">
+                      </div>
+                    </div>
+
+                    <div class="form-row mb-1">
+                    <div class="col-1">
+                      <label for="dob"><b>DOB</b></label>
+                    </div>
+                      <div class="col">
+                        <input type="date" class="form-control" placeholder="DOB" id="dob" name="dob" value="1985-05-22">
+                      </div>
+
+                    </div>
+
+                    <div class="form-row mb-1">
+                    <div class="col-1">
+                      <label for="phone"><b>Phone</b></label>
+                    </div>
+                      <div class="col">
+                        <input type="text" class="form-control" placeholder="Phone" id="phone" name="phone" value="646-982-4264">
+                      </div>
+                    </div>
+
+                    <input type="hidden" name="stuID" value="147">
+
+                    <button type="submit" class="btn btn-primary default-primary-color" id="save_profile">Save changes</button>
+                  </form>
+                </div>
+                <br>
+
+
+              </div>
+                  <div class="tab-pane fade" id="referal" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <p class="mt-2" style="font-size:150%;">
+                  <b>Referal:</b>
+                </p>
+
+                <div class="input-group ">
+                  <div class="input-group-prepend col-1 p-0">
+                    <label class="input-group-text w-100" for="refered_from"><b>From</b></label>
+                  </div>
+
+                  <input type="text" disabled="" class="form-control" placeholder="Office" id="refered_from" name="refered_from" value="Bursar">
+
+                </div>
+                <div class="input-group ">
+                  <div class="input-group-prepend col-1 p-0">
+                    <label class="input-group-text w-100" id="refered_to_text" for="refered_to"><b>To</b></label>
+                  </div>
+                  <select class="custom-select" id="refered_to">
+                    <option disabled="" selected="">Choose...</option>
+                    <option value="Admissions">Admissions</option><option value="Testing">Testing</option><option value="Financial Aid">Financial Aid</option><option value="SEEK">SEEK</option><option value="Financial Aid Lab">Financial Aid Lab</option><option value="ASAP">ASAP</option><option value="SEEK_Lab">SEEK_Lab</option><option disabled="" value="Bursar">Bursar</option>
+
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="referal_notes" id="referal_notes_text"><b>Referal Notes</b></label>
+                  <textarea class="form-control" id="referal_notes" name="referal_notes" rows="3"></textarea>
+                </div>
+                <input type="hidden" name="id_visit" value="1413">
+                <input type="hidden" name="id_student" id="id_student" value="147">
+
+                <button type="button" class="btn btn-primary default-primary-color" id="referal_submit">Submit &amp; End Visit</button>
+
+                <div id="display_referal"></div>
+
+              </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button id="btnPrint" type="button" class="btn btn-default">Print</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+        <div class="modal openM" id="select_modal">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div id=selectperson>
+                <br><h1><i class="fas fa-spinner fa-pulse"></i> LOADING...</h1><br>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <script>
+
+  var start = new Date();
+
+  $(window).load(function() {
+    $('#lastupdated').html("<b>Updated:</b> "+new Date());
+  });
+
+
+  var notification_array_old = ['0'];
+  notification_array_lenght_old = 0;
+
+  $(document).on("click", "#refresh", function(e) {
+    location.reload();
+  });
+
+  $(document).on("click", "#edit_toggle", function(e) {
+    $(".edits").toggle();
+    $(".info_show").toggle();
+  });
+
+
+
+  $(document).on("click", "#selectbutton", function(e) {
+    $('#select_modal').modal('show');
+  });
+
+
+
+  google.charts.load('current', {packages: ['corechart', 'bar']});
+  google.charts.setOnLoadCallback(drawBasic);
+
+  function drawBasic() {
+    var data = google.visualization.arrayToDataTable([
+      ['Date', 'Visits',{role: 'tooltip'},{ role: 'annotation' }],
+      ['Wednesday',87, '2018-03-14 Wednesday', '87'],
+      ['Thursday',114, '2018-03-15 Thursday', '114'],
+      ['Friday',52, '2018-03-16 Friday', '52'],
+      ['Monday',123, '2018-03-19 Monday', '123'],
+      ['Tuesday',254, '2018-03-20 Tuesday', '254'],
+    ]);
+
+
+    var options = {
+      'height':100,
+      // 'width':100,
+
+      chartArea: {
+        // leave room for y-axis labels
+        width: '100%'
+      },
+      legend: {position: 'none'},
+      // title: '7 Day visits',
+      titleTextStyle:{color: '#FFF'},
+      series: { 0: {color: 'lightgray'} },
+      hAxis: {
+        textStyle:{color: '#FFF'},
+        // textPosition: 'none' ,
+        gridlines: {
+          color: 'transparent'
+        }
+      },
+      vAxis: {
+        baselineColor: 'transparent',
+        textStyle:{color: '#FFF'},
+        textPosition: 'none',
+        gridlines: {
+          color: 'transparent'
+        }
+
+      },
+      textStyle:{color: '#FFF'},
+      backgroundColor: 'none',
+      tooltip: { textStyle: { fontName: 'verdana', fontSize: 16 } },
+      annotations: {
+        alwaysOutside: true,
+        textStyle: {
+          fontSize: 14,
+          bold: true,
+          color: '#ffffff',
+          auraColor: 'none'
+        },
+        stem:{
+          color: 'transparent',
+        }
+      },
+    };
+
+    var chart = new google.visualization.LineChart(  document.getElementById('chart_div'));
+
+
+    chart.draw(data, options);
+  }
+
+
+</script>
+
+<script>
+function initMap() {
+
+  var broadway = {
+    info: '<strong>Courier 1</strong><br>\
+    Status: Coming back to restock<br>',
+    lat: 40.703082,
+    long: -73.986078
+
+  };
+
+  var belmont = {
+    info: '<strong>Courier 2</strong><br>\
+    Status: On route to delivery<br>',
+    lat: 40.713681,
+    long: -73.961841
+  };
+
+  var sheridan = {
+    info: '<strong>Courier 3</strong><br>\
+    Status: On route to delivery<br>',
+    lat: 40.677610,
+    long: -74.005633
+  };
+
+  var costumer1 = {
+    info: '<strong>Hector R Dominguez</strong><br>\
+    Status: Request<br> Request: 2 Battery packs',
+    lat: 40.679496,
+    long: -74.009505
+  };
+
+  var costumer2 = {
+    info: '<strong>Paula Dorismond</strong><br>\
+    Status: Request<br> Request: 1 Battery pack',
+    lat: 40.694731,
+    long: -73.985136
+  };
+
+  var costumer3 = {
+    info: '<strong>Shereen Munroe</strong><br>\
+    Status: Request<br> Request: 1 Battery pack',
+    lat: 40.715943,
+    long: -73.960732
+  };
+
+
+  var image_truck = new google.maps.MarkerImage("https://wfoundry.com/art/delivery-truck.svg", null, null, null, new google.maps.Size(50,50));
+  var myIcon_user = new google.maps.MarkerImage("https://wfoundry.com/art/user-and-clock.svg", null, null, null, new google.maps.Size(50,50));
+
+
+
+
+  var locations = [
+    [broadway.info, broadway.lat, broadway.long, 0,"Courier 1",   image_truck ],
+    [belmont.info, belmont.lat, belmont.long, 1,"Courier 3", image_truck ],
+    [sheridan.info, sheridan.lat, sheridan.long, 2,"Courier 3", image_truck  ],
+
+    [costumer1.info, costumer1.lat, costumer1.long, 4,"Costumer: Hector", myIcon_user],
+    [costumer2.info, costumer2.lat, costumer2.long, 5,"Costumer: Judy", myIcon_user],
+    [costumer3.info, costumer3.lat, costumer3.long, 6,"Costumer: Levar", myIcon_user],
+  ];
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: new google.maps.LatLng(40.694989, -73.991942),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  var infowindow = new google.maps.InfoWindow({});
+
+  var marker, i;
+
+  var image_truck_user = 'https://wfoundry.com/art/user-and-clock.png';
+
+
+
+  for (i = 0; i < locations.length; i++) {
+    marker = new google.maps.Marker({
+      position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+      map: map,
+      title: locations[i][4],
+      icon: locations[i][5],
+
+
+    });
+
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+      return function () {
+        infowindow.setContent(locations[i][0]);
+        infowindow.open(map, marker);
+      }
+    })(marker, i));
+  }
+}
+
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8flsb9uSViWUdueBHn5hfRvmNNAzEBpI&callback=initMap">
+</script>
+
+
+<script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
+
+

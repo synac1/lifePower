@@ -155,7 +155,7 @@ def batteryRequestHandler():
             quantities=request.form['quantities']
             id_user = session.get('id_user')
             bRequest.addOne(id_user,int(quantities))
-            
+            flash('You Successfully Requested %s batteries'%(quantities))
             return redirect("/")
         except Exception as e:
             return render_template('error.html',error = str(e))

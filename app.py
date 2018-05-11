@@ -102,7 +102,7 @@ def logout():
 #----------------------
 @app.route("/mDashboard")
 def dashboardManager():
-    return render_template('ManagerDashboard.html')
+    return render_template('managerDashboard.html')
 
 @app.route("/cDashboard")    
 def dashboardCourier():
@@ -117,10 +117,51 @@ def dashboardPremium():
     return render_template('enterpriseDashboard.html')
 
 
+#-------------------------------------
+# Manager
+#--------------------------------------
+@app.route("/mRequests")
+def manageRequests():
+    if session.get('role')=='manager':
+        return render_template('manageRequests.html')
+    else:
+        return render_template('error.html',error = '404')
+        
+@app.route("/mCouriers")
+def manageCouriers():
+    if session.get('role')=='manager':
+        return render_template('manageCouriers.html')
+    else:
+        return render_template('error.html',error = '404')
 
+        
+@app.route("/mStock")
+def manageStock():
+    if session.get('role')=='manager':
+        return render_template('manageStock.html')
+    else:
+        return render_template('error.html',error = '404')
 
+#-----------------------------------------
+#User
+#-----------------------------------------
 
-
+@app.route('/batteryRequest',methods=['POST'])
+def batteryRequestHandler():
+   
+    bRequest= db.BatteryRequest()
+    if session.get('role')=='user':
+        try:
+            quantities=request.form['quantities']
+            id_user = session.get('id_user')
+            bRequest.addOne(id_user,int(quantities))
+            
+            return redirect("/")
+        except Exception as e:
+            return render_template('error.html',error = str(e))
+    else:
+        return render_template('error.html',error = '404')
+    
 #----------------------------------------
 # launch
 #----------------------------------------

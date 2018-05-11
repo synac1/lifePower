@@ -90,7 +90,7 @@ class Users:
         query='select id_role from '+adminTable+' where id_user = (%s)'
         info= self.db.execute_query_one(query, (userId,))
         if info is not None :
-            return info
+            return info[0]
         else:
             return None
     def getId(self,login,password):
@@ -104,6 +104,7 @@ class Users:
     def getOne(self, id):
         query='select * from '+self.tableName+' where id_user=(%s) '
         row= self.db.execute_query_one(query, (id,))
+        print(row)
         if row is not None:
             user= User()
             user.id=id
@@ -170,13 +171,22 @@ class Stock:
     
 class BatteryRequest:
     def __init__(self):
-        self.tableName=''
+        self.tableName='requests'
+        self.db= Database('root','test1234','127.0.0.1',
+                '3308','mydb')
     def getAll(self):
         return self.db.getAll(self.tableName)
     def getOne(self, id):
         query=''
-    def addOne(self, request):
-        query=''
+    def addOne(self, id_user, quantity):
+        user=Users().getOne(id_user)
+        query='insert into ' + self.tableName + ' (id_user, status) values(%s,%s);'
+        request=self.db.execute_query_one(query,(id_user,'pending'))
+        id_request=self.db.cur.lastrowid
+        requestItemQuery ='insert into request_items (id_request) values(%s)'
+        for i in range(quantity):
+            self.db.execute_query_one(requestItemQuery, (id_request,))
+            
     def updateOne(self, id):
         query=''
     def removeOne(self, id):

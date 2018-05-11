@@ -84,8 +84,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`requests` (
   `id_request` INT NOT NULL AUTO_INCREMENT,
   `id_user` INT NULL,
   `id_user_courier` INT NULL,
-  `created` DATETIME NULL,
-  `updated` DATETIME NULL,
+  `created` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated` DATETIME  DEFAULT CURRENT_TIMESTAMP
+                ON UPDATE CURRENT_TIMESTAMP,
   `status` VARCHAR(45) NULL,
   PRIMARY KEY (`id_request`),
   INDEX `user_idx` (`id_user` ASC),

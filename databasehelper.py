@@ -26,7 +26,7 @@ class Database:
         self.con = mysqlcon.connect(user=self.usr,password=self.pswd,
                                       host=self.host, port= self.port,
                                       database= self.database)
-        self.cur=self.con.cursor()
+        self.cur=self.con.cursor(dictionary=True)
         
     def __del__(self):
         self.cur.close()
@@ -73,7 +73,8 @@ class Users:
         adminTable='admin'
         query='select count(*) from '+adminTable+' where login = (%s)' 
         count= self.db.execute_query_one(query, (login,))
-        if count[0] == 1 :
+        print(count)
+        if count['count(*)'] == 1 :
             return True
         else:
             return False
@@ -90,13 +91,13 @@ class Users:
         query='select id_role from '+adminTable+' where id_user = (%s)'
         info= self.db.execute_query_one(query, (userId,))
         if info is not None :
-            return info[0]
+            return info['id_role']
         else:
             return None
     def getId(self,login,password):
         info=getAdminInfoValid(self, login, password)
         if info is not None:
-            return info[0]
+            return info['id_user']
         else:
             return None
     def _getIdbyEmail(self, email):
@@ -108,12 +109,13 @@ class Users:
         if row is not None:
             user= User()
             user.id=id
-            user.email=row[1]
-            user.fname=row[2]
-            user.lname=row[3]
-            user.device=row[4]
-            user.lat=row[5]
-            user.lng=row[6]
+            user.email=row['email']
+            user.fname=row['fname']
+            user.lname=row['lname']
+            user.phone=row['phone']
+            user.device=row['device']
+            user.lat=row['gps_latitude']
+            user.lng=row['gps_longitude']
             user.roleId=self._getRoleId(user.id)
             user.role=self.getRole(user.roleId)
             return user
@@ -123,8 +125,9 @@ class Users:
     def getRole(self, roleId):
         query='select role  from role  where id_role = (%s) '
         role= self.db.execute_query_one(query, (roleId,))
+    
         if role is not None:
-            return role[0]
+            return role['role']
         else:
             return None
 
@@ -178,9 +181,15 @@ class BatteryRequest:
         return self.db.getAll(self.tableName)
     def getOne(self, id):
         query=''
+    def getAllByUser(self, id_user):
+        query='select * from ' + self.tableName + ' where id_user = %s ORDER BY created DESC'
+
+        rows=self.db.execute_query_all(query,(id_user,))
+        return rows
+        
     def addOne(self, id_user, quantity):
         user=Users().getOne(id_user)
-        query='insert into ' + self.tableName + ' (id_user, status) values(%s,%s);'
+        query='insert into ' + self.tableName + ' (id_user, status) values(%s,%s)'
         request=self.db.execute_query_one(query,(id_user,'pending'))
         id_request=self.db.cur.lastrowid
         requestItemQuery ='insert into request_items (id_request) values(%s)'

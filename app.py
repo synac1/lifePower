@@ -49,8 +49,8 @@ def validateLogin():
         if users.isUser(_username):
             userInfo=users.getAdminInfoValid(_username,_password)
             if userInfo is not None:
-                session['id_user'] = userInfo[0]
-                session['id_role'] = userInfo[1]
+                session['id_user'] = userInfo['id_user']
+                session['id_role'] = userInfo['id_role']
                 return redirect('/userHome')
             else:
                 return render_template('error.html',error = 'Wrong UserName or Password.')
@@ -110,7 +110,11 @@ def dashboardCourier():
 
 @app.route("/uDashboard")
 def dashboardUser():
-    return render_template('userDashboard.html')
+    id_user = session.get('id_user')
+    bRequest= db.BatteryRequest()
+    data=bRequest.getAllByUser(id_user)
+    user=db.Users().getOne(id_user)
+    return render_template('userDashboard.html', data=data, user=user)
 
 @app.route("/eDashboard")
 def dashboardPremium():

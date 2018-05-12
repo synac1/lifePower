@@ -2,13 +2,61 @@
 {% block title %}LifePower{% endblock %}
 {% block content %}
    <div class="container">
-            <div class="row" style="margin-top:232px;">
-                <div class="col-md-12">
-                    <h1 class="text-center" data-aos="fade-right" data-aos-duration="3000" ><strong>LifePower</strong></h1>
-                    <h1><strong>User Dashboard</strong></h1>
-                    <p class="lead text-center" data-aos="fade-left" data-aos-duration="3000" s><em>
+            <div class="row" style="margin-top:50px;">
+            	<div class="col-md-12">
+            		   <h1 class="text-center" data-aos="fade-right" data-aos-duration="3000" >
+            		   	<strong>Welcome, {{user.fname}}</strong>
+            		   </h1>
+              
 
-                    </em> </p>
+                    <p class="lead text-center" data-aos="fade-left" data-aos-duration="3000" s>
+
+                    <em>
+
+                    </em> 
+                </p>
+            	</div>
+            </div>
+            <div class="row" >
+            	<div class="col-md-4">
+            		<h4>Your Requests</h4>
+            		<table class="table table-hover table-responsive-md table-wrapper-2"  >
+            			<thead class="thead-dark bg-dark"
+            		>     <tr><th>ID</th><th>Device</th><th>Status</th><th>Ordered</th>
+            				</tr>
+            			</thead>
+            			<tbody >
+            			{% if data and user.device %}
+            				{% for row in data %}
+            					<tr><td>{{ row['id_request'] }}</td><td>{{user.device}}</td><td>{{row['status'] }}</td><td>{{ row['created'].strftime('%m-%d-%Y')  }}</td></tr>
+            				{% endfor %}
+            			{% endif %}
+            			</tbody>
+            		</table>
+            	</div>
+            	<div class="col-md-4">
+            		<div>
+            			<div id="map_canvas" style="width:50%">
+            			</div>
+            			<button onClick="myMap()" class="btn btn-dark">Ping Location</button>
+            		</div>
+            	</div>
+            	<div class="col-md-4">
+            		<div class="card" style="width:100%">
+            		<img class="card-img-top" src="https://robohash.org/lifepower-user" alt="Card image" style="width:50%">
+					  <div class="card-body">
+					    <h4 class="card-title">{{user.lname}},  {{user.fname}}</h4>
+					    <p class="card-text"><strong>Device:</strong> {{user.device}}</p>
+					    <p class="card-text"><strong>Phone:</strong> {{user.phone}}</p>
+					    <p class="card-text"><strong>Email:</strong> {{user.email}}</p>
+					    <a href="#" class="btn btn-dark">Update Profile</a>
+					  </div>
+					</div>
+            	</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+               
 			        <main class="col">
 			        	{% with messages = get_flashed_messages() %}
 						  {% if messages %}
@@ -32,7 +80,7 @@
 			        	</div>
 			        	<div class="form-group row">
 			           		<div class="offset-4 col-8">
-			                	<input name="submit" type="submit" class="btn btn-primary" value="Submit"/>
+			                	<input name="submit" type="submit" class="btn btn-dark" value="Request Batteries"/>
 			            	</div>
 			        	</div>
 			    	</form>
@@ -45,4 +93,19 @@
                 
             </div>
         </div>
+
+		<script>
+		function myMap() {
+		var mapOptions = {
+		    center: new google.maps.LatLng(51.5, -0.12),
+		    zoom: 10,
+		    mapTypeId: google.maps.MapTypeId.HYBRID
+		}
+		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+		}
+		</script>
+
+		  <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"
+  type="text/javascript"></script>
+
 {% endblock %}

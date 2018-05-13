@@ -7,14 +7,6 @@
             		   <h1 class="text-center" data-aos="fade-right" data-aos-duration="3000" >
             		   	<strong>Welcome, {{user.fname}}</strong>
             		   </h1>
-              
-
-                    <p class="lead text-center" data-aos="fade-left" data-aos-duration="3000" s>
-
-                    <em>
-
-                    </em> 
-                </p>
             	</div>
             </div>
             <div class="row" >
@@ -36,9 +28,10 @@
             	</div>
             	<div class="col-md-4">
             		<div>
-            			<div id="map_canvas" style="width:50%">
+            			
+            			<button onClick="getLocation()" class="btn btn-dark">Ping Location</button>
+            			<div id="location" style="width:50%">
             			</div>
-            			<button onClick="myMap()" class="btn btn-dark">Ping Location</button>
             		</div>
             	</div>
             	<div class="col-md-4">
@@ -94,18 +87,26 @@
             </div>
         </div>
 
-		<script>
-		function myMap() {
-		var mapOptions = {
-		    center: new google.maps.LatLng(51.5, -0.12),
-		    zoom: 10,
-		    mapTypeId: google.maps.MapTypeId.HYBRID
-		}
-		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-		}
-		</script>
+<script>
+	var x = document.getElementById("location");
 
-		  <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"
-  type="text/javascript"></script>
+	function getLocation() {
+    	if (navigator.geolocation) {
+        	navigator.geolocation.getCurrentPosition(showPosition);
+    }	 else { 
+      	  x.innerHTML = "Geolocation is not supported by this browser.";
+   		 }
+	}
+
+	function showPosition(position) {
+    x.innerHTML =
+    	
+    	"Latitude: " + position.coords.latitude + 
+	    "<br>Longitude: " + position.coords.longitude
+
+
+	    ;
+	}
+</script>
 
 {% endblock %}
